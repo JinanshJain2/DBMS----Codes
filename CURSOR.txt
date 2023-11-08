@@ -1,0 +1,40 @@
+CREATE TABLE Cust New (customer_id INT PRIMARY KEY, customer_name VARCHAR(50)); 
+CREATE TABLE Cust Old (customer_id INT PRIMARY KEY, customer_name VARCHAR(50));
+
+INSERT INTO Cust_New (customer_id, customer_name) VALUES (1, 'John Doe'), (2, 'Jane Smith'), (3, 'Alice Johnson'), (4, 'Bob Brown'); INSERT INTO Cust Old (customer_id, customer_name) VALUES (1, 'John Doe'), (3, 'Alice Johnson');
+
+CREATE OR ALTER PROCEDURE MergeDataWithCursor 
+AS
+
+BEGIN
+
+DECLARE @customer_id INT;
+
+DECLARE @customer_name VARCHAR(50);
+
+DECLARE customer_cursor CURSOR FOR SELECT customer_id, customer_name FROM Cust_New;
+
+OPEN customer_cursor;
+
+FETCH NEXT FROM customer_cursor INTO @customer_id, @customer_name;
+
+WHILE @@FETCH_STATUS = 0
+
+BEGIN
+
+IF NOT EXISTS (SELECT 1 FROM Cust Old WHERE customer_id = @customer_id)
+
+BEGIN
+
+INSERT INTO Cust_old (customer_id, customer_name) VALUES (@customer_id, @customer_name);
+
+END;
+
+FETCH NEXT FROM customer_cursor INTO @customer_id, @customer_name;
+
+END;
+
+CLOSE customer_cursor;
+DEALLOCATE customer_cursor;
+
+END;

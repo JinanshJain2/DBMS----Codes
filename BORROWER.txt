@@ -1,0 +1,36 @@
+CREATE TABLE borrower (roll no int, name VARCHAR(25), dateofissue DATE, name_of_book VARCHAR(25), status VARCHAR(20));
+CREATE TABLE fine (roll_no int, date_of_return DATE, amt int); 
+INSERT INTO Borrower VALUES (45, ASHUTOSH CONVERT(DATE, '2022-08-01', 23), 'HARRY POTTER', 'PENDING');
+INSERT INTO Borrower VALUES (46, ARYAN' CONVERT(DATE, 2022-08-15, 23), DARK MATTER', 'PENDING');
+INSERT INTO Borrower VALUES (47, ROHAN, CONVERT(DATE, 2022-08-24', 23), SILENT HILL', 'PENDING'); 
+INSERT INTO Borrower VALUES (48, SANKET, CONVERT(DATE, 2022-08-26', 23), 'GOD OF WAR' 'PENDING');
+INSERT INTO Borrower VALUES (49, SARTHAK, CONVERT(DATE, 2022-09-09, 23), 'SPIDER-MAN', 'PENDING');
+
+DECLARE @i_roll_no INT= 49;
+DECLARE @name_of_book NVARCHAR(25) = *SPIDER-MAN'S
+DECLARE @no_of_days INT;
+DECLARE @return date DATE = GETDATE();
+DECLARE @temp INT; DECLARE @doi DATE;
+DECLARE @fine INT;
+
+SELECT @doi = dateofissue
+FROM Borrower
+WHERE roll_no = @i_roll_no
+AND name of book @name_of_book;
+SET @no_of_days = DATEDIFF (DAY, @doi, @return_date);
+PRINT @no_of_days;
+IF (@no_of_days > 15 AND @no_of_days <= 30)
+BEGIN
+SET @fine 5 @no_of_days; 
+END
+ELSE IF (@no_of_days > 30)
+BEGIN 
+SET @temp @no_of_days - 30;
+SET @fine 150+ @temp * 50; 
+END
+PRINT @fine;
+
+INSERT INTO Fine (roll_no, date of return, Amt) VALUES (@i_roll_no, @return_date, @fine);
+UPDATE Borrower
+SET Status = 'RETURNED'
+WHERE roll_no @i_roll_no;

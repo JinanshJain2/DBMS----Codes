@@ -1,0 +1,57 @@
+CREATE TABLE Stud Marks ( name VARCHAR(50), total_marks INT);
+
+INSERT INTO Stud_Marks (name, total_marks)
+
+VALUES ('John', 1450), ('Alice', 1000), ('Bob', 920), ('Charlie', 875), ('David', 1600);
+
+CREATE TABLE Result (Name VARCHAR(50), Class VARCHAR(50));
+
+CREATE OR ALTER PROCEDURE proc Grade AS
+
+BEGIN
+
+DECLARE @name VARCHAR(50);
+
+DECLARE @marks INT;
+
+DECLARE @class VARCHAR(50);
+
+DECLARE grade_cursor CURSOR FOR SELECT name, total_marks FROM Stud Marks;
+
+OPEN grade_cursor;
+
+FETCH NEXT FROM grade_cursor INTO @name, @marks;
+
+WHILE @@FETCH_STATUS = 0
+
+BEGIN
+
+IF (@marks <= 1500 AND @marks >= 990)
+
+SET @class = 'Distinction'; ELSE IF (@marks <= 989 AND @marks >= 90e)
+
+SET @class= 'First Class';
+
+ELSE IF (@marks <= 899 AND @marks >= 825)
+
+SET @class = 'Higher Second Class';
+
+SET @class = 'Fail';
+
+ELSE
+
+INSERT INTO Result (Name, Class)
+
+VALUES (@name, @class);
+
+FETCH NEXT FROM grade_cursor INTO @name, @marks;
+
+END;
+
+CLOSE grade_cursor;
+
+DEALLOCATE grade_cursor;
+
+END;
+
+EXEC proc_Grade;

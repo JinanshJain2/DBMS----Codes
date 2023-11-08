@@ -1,0 +1,18 @@
+DECLARE @radius_var INT;
+DECLARE @area_var DECIMAL(18, 2); DECLARE @pi DECIMAL(18, 2) = 3.14;
+
+CREATE TABLE #circle (radius INT, area DECIMAL(18, 2));
+SET @radius_var = 5;
+
+WHILE @radius_var <= 9
+
+BEGIN 
+SET @area_var = @pi @radius_var * @radius_var; 
+PRINT @area_var;
+
+INSERT INTO #circle (radius, area) VALUES (@radius_var, @area_var);
+
+SET @radius_var = @radius_var + 1; 
+END;
+
+SELECT FROM #circle;

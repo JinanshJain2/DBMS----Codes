@@ -1,0 +1,25 @@
+CREATE TABLE tbl_employee ( EmployeeID INT PRIMARY KEY, Name VARCHAR(50), Salary int);
+
+insert into tbl_employee 
+values (101, 'Manasi', 90000); 
+insert into tbl_employee 
+values (102, 'Manvika', 75000); 
+insert into tbl_employee 
+values (103, 'Mayuri', 95000); 
+insert into tbl_employee 
+values (104, 'Sakshee', 70000); 
+insert into tbl_employee 
+values (105, 'Lavanya', 62000); 
+insert into tbl_employee 
+values (106, 'Kriti', 50000);
+
+select * from tbl_employee;
+select name, salary from tbl_employee; 
+select name, salary from tbl_employee where salary>80000;
+
+update tbl_employee set salary=75000 where lower(name) = 'sakshee'; 
+update tbl_employee set name='Manasi W' where EmployeeID=101; 
+update tbl_employee set name='Sakshee P' where EmployeeID=104;
+
+delete from tbl_employee where salary<65000; 
+delete from tbl_employee;

@@ -1,0 +1,34 @@
+CREATE DATABASE LibraryDB;
+USE LibraryDB;
+
+CREATE TABLE Books (
+BookID INT PRIMARY KEY, Title VARCHAR(255), AuthorID VARCHAR(100), PublicationYear INT
+);
+
+CREATE TABLE Authors (
+AuthorID INT PRIMARY KEY, AuthorName VARCHAR(100)
+);
+
+INSERT INTO Books (BookID, Title, AuthorID, PublicationYear)
+VALUES
+(1, 'Book 1', 1, 2008),
+(2, 'Book 2', 2, 2005),
+(3, 'Book 3', 3, 2010);
+
+INSERT INTO Authors (AuthorID, AuthorName) 
+VALUES
+(1, 'Author 1'),
+(2, 'Author 2'),
+(3, 'Author 3');
+
+ALTER TABLE Books
+ADD AuthorID INT;
+ALTER TABLE Books
+ADD CONSTRAINT FK_Books_Author FOREIGN KEY (AuthorID) REFERENCES Authors (AuthorID);
+
+CREATE VIEW BookAuthors AS 
+SELECT b.BookID, b.Title, b.PublicationYear, a.AuthorID AS Author FROM Books b
+JOIN Authors a ON b.AuthorID= a.AuthorID;
+CREATE INDEX idx_Title ON Books (Title);
+CREATE SEQUENCE BookIDSequence START WITH 100 INCREMENT BY 1; 
+CREATE SYNONYM BookDetails FOR BookAuthors;
